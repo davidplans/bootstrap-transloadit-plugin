@@ -40,11 +40,11 @@
         params: transloaditParams,
         wait: true,
         modal: false,
-        autoSubmit: false,
+        autoSubmit: true,
         processZeroFiles: false,
         onPick: function (assembly) {
           $el.find('.uploader-controls .help-inline.errror').remove();
-          $el.find('.uploader-button').html('Uploading...');
+          $el.find('.uploader-button').html('uploading...');
           $el.find('.uploader-progress').show();
           $el.find('.uploader-progress .bar').css('width', '0%');
         },
