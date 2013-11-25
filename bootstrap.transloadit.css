@@ -1,3 +1,7 @@
+textarea {
+   font-family: inherit;
+   font-size: inherit;
+}
 .uploader-controls .uploader-preview {
   display: inline-block;
   float: left;
@@ -17,7 +21,7 @@
 }
 .uploader-controls .uploader-side {
   display: inline-block;
-  max-width: 230px;
+  max-width: 330px;
   position: relative;
   margin-bottom: 5px;
 }

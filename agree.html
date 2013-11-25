@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>BioBeats Artist Uploader
+    </title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.transloadit.css"/>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="jumbo" class="jumbotron">
+    <div class="container">
+      <img src="BioBeats_logo_black.png" width="300">
+      <h1>
+        Hello, Artist.
+      </h1>
+      <p>
+        Below is our licensing agreement, which explains that if your music is sold as a BioBeat, 70% of purchase revenue will go directly to the artist (you) and 30% to BioBeats, after 10% is donated to charity : water - a non-profit organization bringing clean, safe drinking water to people in developing nations. 
+      </p>
+      <form action="upload.html">
+        <textarea readonly id="terms" cols="50" rows="4" style="font-size: 10pt; important;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea><br/>
+        <input class="submit btn btn-lg btn-info" type="submit" value="agree" id="agree"/>
+      </form>
+    </div>
+  </div>
+
+
+  <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+  <!-- These three are un-modified -->
+  <script src="jquery.easing.js"></script>
+  <script src="jquery.jsonp.js"></script>
+  <script src="json2.js"></script>
+  <!-- This is a modified version of Transloadit's official script -->
+  <script src="jquery.transloadit2.js"></script>
+  <!-- This is the bootstrap specific JS -->
+  <script src="bootstrap.transloadit.js"></script>
+  <script>
+  $('#terms').scroll(function () {
+      if ($(this).scrollTop() == $(this)[0].scrollHeight - $(this).height()) {
+          $('#agree').removeAttr('disabled');
+      }
+  });
+  </script>
+  </body>
+</html>

@@ -25,14 +25,16 @@
       , pollTimeout: 8000
       , poll404Retries: 15
       , pollConnectionRetries: 3
-      , wait: false
+      , wait: true
       , processZeroFiles: true
-      , autoSubmit: true
-      , modal: true
+      , autoSubmit: false
+      , modal: false
       , exclude: ''
-      , fields: false
+      , fields: true
       , params: null
       , debug: true
+      , wait: true
+      , triggerUploadOnFileSelection: false
       }
     , CSS_LOADED = false;
 
@@ -191,11 +193,30 @@
       fieldsFilter += ', '+this._options.fields;
     }
 
-    var $clones = this.clone(this.$form.find(':input[type!=file]').filter(fieldsFilter));
+    //var $clones = this.clone(this.$form.find(':input[type!=file]').filter(fieldsFilter));
+
+    var $fieldsToClone = this.$form.find(':input[type!=file]').filter(fieldsFilter);
+  
+     // remove selects from $clones, because we have to clone them as hidden input
+     // fields, otherwise their values are not transferred properly
+     var $selects = $fieldsToClone.filter('select');
+     $fieldsToClone = $fieldsToClone.filter(function() {
+       return !$(this).is('select');
+     });  
+     var $clones = this.clone($fieldsToClone);
+
     if (this._options.params && !this.$params) {
       $clones = $clones.add('<input name="params" value=\'' + JSON.stringify(this._options.params) + '\'>');
     }
     $clones.prependTo(this.$uploadForm);
+  
+  // now add all selects as hidden fields
+    $selects.each(function() {
+      $('<input type="hidden"/>')
+      .attr('name', $(this).attr('name'))
+      .attr('value', $(this).val())
+      .prependTo(self.$uploadForm);
+    });
 
     this.$uploadForm.submit();
 
@@ -225,11 +246,8 @@
       return true;
     }
 
-    if (acceptedTypes == 'video/*') {
-      acceptedTypes = 'video/mp4,video/flv,video/avi,video/mpg,video/mov,video/wmv,video/h264,video/mkv';
-    }
-    if (acceptedTypes == 'image/*') {
-      acceptedTypes = 'image/png,image/jpeg,image/gif,image/jpg,image/ico';
+    if (acceptedTypes == 'audio/*') {
+      acceptedTypes = 'audio/x-wav';
     }
     acceptedTypes = acceptedTypes.split(',');
 

@@ -25,6 +25,7 @@
       var maxSize = $el.attr('data-transloadit-maxsize') || self.options.maxSize;
       var key = $el.attr('data-transloadit-key') || self.options.key;
       var template = $el.attr('data-transloadit-template') || self.options.template;
+      var artistName = $el.attr('data-transloadit-artistName') || self.options.artistName;
 
       if (!key || ! template && window.console && window.console.warn) {
         console.warn('Must specify key or template for upload to work.');
@@ -40,10 +41,12 @@
         params: transloaditParams,
         wait: true,
         modal: false,
-        autoSubmit: true,
         processZeroFiles: false,
+        triggerUploadOnFileSelection: false,
+        autoSubmit: false,
+
         onPick: function (assembly) {
-          $el.find('.uploader-controls .help-inline.errror').remove();
+          $el.find('.uploader-controls .help-inline.error').remove();
           $el.find('.uploader-button').html('uploading...');
           $el.find('.uploader-progress').show();
           $el.find('.uploader-progress .bar').css('width', '0%');
@@ -63,14 +66,17 @@
         },
         onSuccess: function (assembly) {
           console.log(assembly);
-          $el.find('.uploader-button').html('Upload file');
+          $el.find('.uploader-button').html('done');
+          $el.find('.uploader-side .uploader-button').toggleClass("btn-success");
           $el.find('.uploader-progress').fadeOut();
+          $el.find('.col-md-10').html('Thank you!');
+          setTimeout(function(){window.location.replace("http://www.biobeats.com/artist/thankyou.html")},3000);
 
           function getResultForStep(stepId) {
             var result = assembly.results[stepId][0];
             result.value = makeHttps(result.url);
-            if (result.type == 'image') {
-              result.image = makeHttps(result.url);
+            if (result.type == 'audio') {
+              result.audio = makeHttps(result.url);
             }
             return result;
           }
@@ -88,6 +94,7 @@
           $el.find('.uploader-input-url').val(mainResult.value).trigger('change');
 
           $.each(resultsMapping, function (fieldName, stepId) {
+
             $el.closest('form').find('input[name="' + fieldName + '"]').val(getResultForStep(stepId).value).trigger('change');
           });
           self.updatePreview();
@@ -132,7 +139,7 @@
   };
 
   $.fn.transloaditUploader.defaults = {
-    maxSize: 1048576,
+    maxSize: 10048576,
     resultsMapping: {},
     previewStyles: {}
   };
